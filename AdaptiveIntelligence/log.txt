@@ -1,0 +1,499 @@
+
+
+***********************ICMP Packet*************************
+
+Ethernet Header
+   |-Destination Address : 00-04-00-01-00-06 
+   |-Source Address      : 08-00-27-2A-F1-C8 
+   |-Protocol            : 0 
+
+IP Header
+   |-IP Version        : 0
+   |-IP Header Length  : 8 DWORDS or 32 Bytes
+   |-Type Of Service   : 6
+   |-IP Total Length   : 1  Bytes(Size of Packet)
+   |-Identification    : 2048
+   |-TTL      : 0
+   |-Protocol : 1
+   |-Checksum : 2048
+   |-Source IP        : 39.42.241.200
+   |-Destination IP   : 10.0.2.15
+
+ICMP Header
+   |-Type : 0  (ICMP Echo Reply)
+   |-Code : 0
+   |-Checksum : 0
+
+IP Header
+    00 04 00 01 00 06 08 00 27 2A F1 C8 00 00 08 06         ........'*......
+    00 01 08 00 06 04 00 01 08 00 27 2A F1 C8 0A 00         ..........'*....
+UDP Header
+    02 0F 00 00 00 00 00 00                                 ........
+Data Payload
+
+###########################################################
+
+***********************ICMP Packet*************************
+
+Ethernet Header
+   |-Destination Address : 00-04-00-01-00-06 
+   |-Source Address      : 08-00-27-2A-F1-C8 
+   |-Protocol            : 0 
+
+IP Header
+   |-IP Version        : 8
+   |-IP Header Length  : 6 DWORDS or 24 Bytes
+   |-Type Of Service   : 221
+   |-IP Total Length   : 24577  Bytes(Size of Packet)
+   |-Identification    : 39565
+   |-TTL      : 17
+   |-Protocol : 1
+   |-Checksum : 65152
+   |-Source IP        : 0.0.0.0
+   |-Destination IP   : 0.0.82.65
+
+ICMP Header
+   |-Type : 78   |-Code : 174
+   |-Checksum : 65282
+
+IP Header
+    00 04 00 01 00 06 08 00 27 2A F1 C8 00 00 86 DD         ........'*......
+    60 01 9A 8D 00 30 11 01                                 `....0..
+UDP Header
+    FE 80 00 00 00 00 00 00                                 .€......
+Data Payload
+    00 00 00 00 00 00 00 00 00 FB 14 E9 14 E9 00 30         ...............0
+    FA 89 00 00 00 00 00 01 00 00 00 00 00 00 0B 5F         ..............._
+    67 6F 6F 67 6C 65 63 61 73 74 04 5F 74 63 70 05         googlecast._tcp.
+    6C 6F 63 61 6C 00 00 0C 00 01                           local.....
+
+###########################################################
+
+***********************ICMP Packet*************************
+
+Ethernet Header
+   |-Destination Address : 00-04-00-01-00-06 
+   |-Source Address      : 08-00-27-2A-F1-C8 
+   |-Protocol            : 55148 
+
+IP Header
+   |-IP Version        : 8
+   |-IP Header Length  : 6 DWORDS or 24 Bytes
+   |-Type Of Service   : 221
+   |-IP Total Length   : 24577  Bytes(Size of Packet)
+   |-Identification    : 39565
+   |-TTL      : 17
+   |-Protocol : 1
+   |-Checksum : 65152
+   |-Source IP        : 0.0.0.0
+   |-Destination IP   : 0.0.82.65
+
+ICMP Header
+   |-Type : 78   |-Code : 174
+   |-Checksum : 65282
+
+IP Header
+    00 04 00 01 00 06 08 00 27 2A F1 C8 6C D7 86 DD         ........'*..l...
+    60 01 9A 8D 00 30 11 01                                 `....0..
+UDP Header
+    FE 80 00 00 00 00 00 00                                 .€......
+Data Payload
+    00 00 00 00 00 00 00 00 00 FB 14 E9 14 E9 00 30         ...............0
+    FA 89 00 00 00 00 00 01 00 00 00 00 00 00 0B 5F         ..............._
+    67 6F 6F 67 6C 65 63 61 73 74 04 5F 74 63 70 05         googlecast._tcp.
+    6C 6F 63 61 6C 00 00 0C 00 01                           local.....
+
+###########################################################
+
+***********************ICMP Packet*************************
+
+Ethernet Header
+   |-Destination Address : 00-04-00-01-00-06 
+   |-Source Address      : 08-00-27-2A-F1-C8 
+   |-Protocol            : 61441 
+
+IP Header
+   |-IP Version        : 8
+   |-IP Header Length  : 6 DWORDS or 24 Bytes
+   |-Type Of Service   : 221
+   |-IP Total Length   : 24577  Bytes(Size of Packet)
+   |-Identification    : 39565
+   |-TTL      : 17
+   |-Protocol : 1
+   |-Checksum : 65152
+   |-Source IP        : 0.0.0.0
+   |-Destination IP   : 0.0.82.65
+
+ICMP Header
+   |-Type : 78   |-Code : 174
+   |-Checksum : 65282
+
+IP Header
+    00 04 00 01 00 06 08 00 27 2A F1 C8 01 F0 86 DD         ........'*......
+    60 01 9A 8D 00 30 11 01                                 `....0..
+UDP Header
+    FE 80 00 00 00 00 00 00                                 .€......
+Data Payload
+    00 00 00 00 00 00 00 00 00 FB 14 E9 14 E9 00 30         ...............0
+    FA 89 00 00 00 00 00 01 00 00 00 00 00 00 0B 5F         ..............._
+    67 6F 6F 67 6C 65 63 61 73 74 04 5F 74 63 70 05         googlecast._tcp.
+    6C 6F 63 61 6C 00 00 0C 00 01                           local.....
+
+###########################################################
+
+***********************ICMP Packet*************************
+
+Ethernet Header
+   |-Destination Address : 00-04-00-01-00-06 
+   |-Source Address      : 08-00-27-2A-F1-C8 
+   |-Protocol            : 46648 
+
+IP Header
+   |-IP Version        : 8
+   |-IP Header Length  : 6 DWORDS or 24 Bytes
+   |-Type Of Service   : 221
+   |-IP Total Length   : 24577  Bytes(Size of Packet)
+   |-Identification    : 39565
+   |-TTL      : 17
+   |-Protocol : 1
+   |-Checksum : 65152
+   |-Source IP        : 0.0.0.0
+   |-Destination IP   : 0.0.82.65
+
+ICMP Header
+   |-Type : 78   |-Code : 174
+   |-Checksum : 65282
+
+IP Header
+    00 04 00 01 00 06 08 00 27 2A F1 C8 38 B6 86 DD         ........'*..8...
+    60 01 9A 8D 00 30 11 01                                 `....0..
+UDP Header
+    FE 80 00 00 00 00 00 00                                 .€......
+Data Payload
+    00 00 00 00 00 00 00 00 00 FB 14 E9 14 E9 00 30         ...............0
+    FA 89 00 00 00 00 00 01 00 00 00 00 00 00 0B 5F         ..............._
+    67 6F 6F 67 6C 65 63 61 73 74 04 5F 74 63 70 05         googlecast._tcp.
+    6C 6F 63 61 6C 00 00 0C 00 01                           local.....
+
+###########################################################
+
+***********************ICMP Packet*************************
+
+Ethernet Header
+   |-Destination Address : 00-04-00-01-00-06 
+   |-Source Address      : 08-00-27-2A-F1-C8 
+   |-Protocol            : 0 
+
+IP Header
+   |-IP Version        : 8
+   |-IP Header Length  : 6 DWORDS or 24 Bytes
+   |-Type Of Service   : 221
+   |-IP Total Length   : 24577  Bytes(Size of Packet)
+   |-Identification    : 39565
+   |-TTL      : 17
+   |-Protocol : 1
+   |-Checksum : 65152
+   |-Source IP        : 0.0.0.0
+   |-Destination IP   : 0.0.82.65
+
+ICMP Header
+   |-Type : 78   |-Code : 174
+   |-Checksum : 65282
+
+IP Header
+    00 04 00 01 00 06 08 00 27 2A F1 C8 00 00 86 DD         ........'*......
+    60 01 9A 8D 00 30 11 01                                 `....0..
+UDP Header
+    FE 80 00 00 00 00 00 00                                 .€......
+Data Payload
+    00 00 00 00 00 00 00 00 00 FB 14 E9 14 E9 00 30         ...............0
+    FA 89 00 00 00 00 00 01 00 00 00 00 00 00 0B 5F         ..............._
+    67 6F 6F 67 6C 65 63 61 73 74 04 5F 74 63 70 05         googlecast._tcp.
+    6C 6F 63 61 6C 00 00 0C 00 01                           local.....
+
+###########################################################
+
+***********************ICMP Packet*************************
+
+Ethernet Header
+   |-Destination Address : 00-04-00-01-00-06 
+   |-Source Address      : 08-00-27-2A-F1-C8 
+   |-Protocol            : 452 
+
+IP Header
+   |-IP Version        : 8
+   |-IP Header Length  : 6 DWORDS or 24 Bytes
+   |-Type Of Service   : 221
+   |-IP Total Length   : 24577  Bytes(Size of Packet)
+   |-Identification    : 39565
+   |-TTL      : 17
+   |-Protocol : 1
+   |-Checksum : 65152
+   |-Source IP        : 0.0.0.0
+   |-Destination IP   : 0.0.82.65
+
+ICMP Header
+   |-Type : 78   |-Code : 174
+   |-Checksum : 65282
+
+IP Header
+    00 04 00 01 00 06 08 00 27 2A F1 C8 C4 01 86 DD         ........'*......
+    60 01 9A 8D 00 2C 11 01                                 `....,..
+UDP Header
+    FE 80 00 00 00 00 00 00                                 .€......
+Data Payload
+    00 00 00 00 00 00 00 00 00 FB 14 E9 14 E9 00 2C         ...............,
+    FA 85 00 00 00 00 00 01 00 00 00 00 00 00 07 5F         ..............._
+    70 72 69 76 65 74 04 5F 74 63 70 05 6C 6F 63 61         privet._tcp.loca
+    6C 00 00 0C 00 01                                       l.....
+
+###########################################################
+
+***********************ICMP Packet*************************
+
+Ethernet Header
+   |-Destination Address : 00-04-00-01-00-06 
+   |-Source Address      : 08-00-27-2A-F1-C8 
+   |-Protocol            : 37994 
+
+IP Header
+   |-IP Version        : 8
+   |-IP Header Length  : 6 DWORDS or 24 Bytes
+   |-Type Of Service   : 221
+   |-IP Total Length   : 24577  Bytes(Size of Packet)
+   |-Identification    : 39565
+   |-TTL      : 17
+   |-Protocol : 1
+   |-Checksum : 65152
+   |-Source IP        : 0.0.0.0
+   |-Destination IP   : 0.0.82.65
+
+ICMP Header
+   |-Type : 78   |-Code : 174
+   |-Checksum : 65282
+
+IP Header
+    00 04 00 01 00 06 08 00 27 2A F1 C8 6A 94 86 DD         ........'*..j...
+    60 01 9A 8D 00 30 11 01                                 `....0..
+UDP Header
+    FE 80 00 00 00 00 00 00                                 .€......
+Data Payload
+    00 00 00 00 00 00 00 00 00 FB 14 E9 14 E9 00 30         ...............0
+    FA 89 00 00 00 00 00 01 00 00 00 00 00 00 0B 5F         ..............._
+    67 6F 6F 67 6C 65 63 61 73 74 04 5F 74 63 70 05         googlecast._tcp.
+    6C 6F 63 61 6C 00 00 0C 00 01                           local.....
+
+###########################################################
+
+***********************ICMP Packet*************************
+
+Ethernet Header
+   |-Destination Address : 00-04-00-01-00-06 
+   |-Source Address      : 08-00-27-2A-F1-C8 
+   |-Protocol            : 45126 
+
+IP Header
+   |-IP Version        : 8
+   |-IP Header Length  : 6 DWORDS or 24 Bytes
+   |-Type Of Service   : 221
+   |-IP Total Length   : 24577  Bytes(Size of Packet)
+   |-Identification    : 39565
+   |-TTL      : 17
+   |-Protocol : 1
+   |-Checksum : 65152
+   |-Source IP        : 0.0.0.0
+   |-Destination IP   : 0.0.82.65
+
+ICMP Header
+   |-Type : 78   |-Code : 174
+   |-Checksum : 65282
+
+IP Header
+    00 04 00 01 00 06 08 00 27 2A F1 C8 46 B0 86 DD         ........'*..F...
+    60 01 9A 8D 00 2C 11 01                                 `....,..
+UDP Header
+    FE 80 00 00 00 00 00 00                                 .€......
+Data Payload
+    00 00 00 00 00 00 00 00 00 FB 14 E9 14 E9 00 2C         ...............,
+    FA 85 00 00 00 00 00 01 00 00 00 00 00 00 07 5F         ..............._
+    70 72 69 76 65 74 04 5F 74 63 70 05 6C 6F 63 61         privet._tcp.loca
+    6C 00 00 0C 00 01                                       l.....
+
+###########################################################
+
+***********************ICMP Packet*************************
+
+Ethernet Header
+   |-Destination Address : 00-04-00-01-00-06 
+   |-Source Address      : 08-00-27-2A-F1-C8 
+   |-Protocol            : 0 
+
+IP Header
+   |-IP Version        : 8
+   |-IP Header Length  : 6 DWORDS or 24 Bytes
+   |-Type Of Service   : 221
+   |-IP Total Length   : 24577  Bytes(Size of Packet)
+   |-Identification    : 39565
+   |-TTL      : 17
+   |-Protocol : 1
+   |-Checksum : 65152
+   |-Source IP        : 0.0.0.0
+   |-Destination IP   : 0.0.82.65
+
+ICMP Header
+   |-Type : 78   |-Code : 174
+   |-Checksum : 65282
+
+IP Header
+    00 04 00 01 00 06 08 00 27 2A F1 C8 00 00 86 DD         ........'*......
+    60 01 9A 8D 00 2C 11 01                                 `....,..
+UDP Header
+    FE 80 00 00 00 00 00 00                                 .€......
+Data Payload
+    00 00 00 00 00 00 00 00 00 FB 14 E9 14 E9 00 2C         ...............,
+    FA 85 00 00 00 00 00 01 00 00 00 00 00 00 07 5F         ..............._
+    70 72 69 76 65 74 04 5F 74 63 70 05 6C 6F 63 61         privet._tcp.loca
+    6C 00 00 0C 00 01                                       l.....
+
+###########################################################
+
+***********************ICMP Packet*************************
+
+Ethernet Header
+   |-Destination Address : 00-04-00-01-00-06 
+   |-Source Address      : 08-00-27-2A-F1-C8 
+   |-Protocol            : 1536 
+
+IP Header
+   |-IP Version        : 8
+   |-IP Header Length  : 6 DWORDS or 24 Bytes
+   |-Type Of Service   : 221
+   |-IP Total Length   : 24577  Bytes(Size of Packet)
+   |-Identification    : 39565
+   |-TTL      : 17
+   |-Protocol : 1
+   |-Checksum : 65152
+   |-Source IP        : 0.0.0.0
+   |-Destination IP   : 0.0.82.65
+
+ICMP Header
+   |-Type : 78   |-Code : 174
+   |-Checksum : 65282
+
+IP Header
+    00 04 00 01 00 06 08 00 27 2A F1 C8 00 06 86 DD         ........'*......
+    60 01 9A 8D 00 30 11 01                                 `....0..
+UDP Header
+    FE 80 00 00 00 00 00 00                                 .€......
+Data Payload
+    00 00 00 00 00 00 00 00 00 FB 14 E9 14 E9 00 30         ...............0
+    FA 89 00 00 00 00 00 01 00 00 00 00 00 00 0B 5F         ..............._
+    67 6F 6F 67 6C 65 63 61 73 74 04 5F 74 63 70 05         googlecast._tcp.
+    6C 6F 63 61 6C 00 00 0C 00 01                           local.....
+
+###########################################################
+
+***********************ICMP Packet*************************
+
+Ethernet Header
+   |-Destination Address : 00-04-00-01-00-06 
+   |-Source Address      : 08-00-27-2A-F1-C8 
+   |-Protocol            : 0 
+
+IP Header
+   |-IP Version        : 8
+   |-IP Header Length  : 6 DWORDS or 24 Bytes
+   |-Type Of Service   : 221
+   |-IP Total Length   : 24577  Bytes(Size of Packet)
+   |-Identification    : 39565
+   |-TTL      : 17
+   |-Protocol : 1
+   |-Checksum : 65152
+   |-Source IP        : 0.0.0.0
+   |-Destination IP   : 0.0.82.65
+
+ICMP Header
+   |-Type : 78   |-Code : 174
+   |-Checksum : 65282
+
+IP Header
+    00 04 00 01 00 06 08 00 27 2A F1 C8 00 00 86 DD         ........'*......
+    60 01 9A 8D 00 30 11 01                                 `....0..
+UDP Header
+    FE 80 00 00 00 00 00 00                                 .€......
+Data Payload
+    00 00 00 00 00 00 00 00 00 FB 14 E9 14 E9 00 30         ...............0
+    FA 89 00 00 00 00 00 01 00 00 00 00 00 00 0B 5F         ..............._
+    67 6F 6F 67 6C 65 63 61 73 74 04 5F 74 63 70 05         googlecast._tcp.
+    6C 6F 63 61 6C 00 00 0C 00 01                           local.....
+
+###########################################################
+
+***********************ICMP Packet*************************
+
+Ethernet Header
+   |-Destination Address : 00-04-00-01-00-06 
+   |-Source Address      : 08-00-27-2A-F1-C8 
+   |-Protocol            : 60340 
+
+IP Header
+   |-IP Version        : 8
+   |-IP Header Length  : 6 DWORDS or 24 Bytes
+   |-Type Of Service   : 221
+   |-IP Total Length   : 24577  Bytes(Size of Packet)
+   |-Identification    : 39565
+   |-TTL      : 17
+   |-Protocol : 1
+   |-Checksum : 65152
+   |-Source IP        : 0.0.0.0
+   |-Destination IP   : 0.0.82.65
+
+ICMP Header
+   |-Type : 78   |-Code : 174
+   |-Checksum : 65282
+
+IP Header
+    00 04 00 01 00 06 08 00 27 2A F1 C8 B4 EB 86 DD         ........'*......
+    60 01 9A 8D 00 30 11 01                                 `....0..
+UDP Header
+    FE 80 00 00 00 00 00 00                                 .€......
+Data Payload
+    00 00 00 00 00 00 00 00 00 FB 14 E9 14 E9 00 30         ...............0
+    FA 89 00 00 00 00 00 01 00 00 00 00 00 00 0B 5F         ..............._
+    67 6F 6F 67 6C 65 63 61 73 74 04 5F 74 63 70 05         googlecast._tcp.
+    6C 6F 63 61 6C 00 00 0C 00 01                           local.....
+
+###########################################################
+
+***********************ICMP Packet*************************
+
+Ethernet Header
+   |-Destination Address : 00-04-00-01-00-06 
+   |-Source Address      : 08-00-27-2A-F1-C8 
+   |-Protocol            : 0 
+
+IP Header
+   |-IP Version        : 8
+   |-IP Header Length  : 6 DWORDS or 24 Bytes
+   |-Type Of Service   : 221
+   |-IP Total Length   : 24577  Bytes(Size of Packet)
+   |-Identification    : 39565
+   |-TTL      : 17
+   |-Protocol : 1
+   |-Checksum : 65152
+   |-Source IP        : 0.0.0.0
+   |-Destination IP   : 0.0.82.65
+
+ICMP Header
+   |-Type : 78   |-Code : 174
+   |-Checksum : 65282
+
+IP Header
+    00 04 00 01 00 06 08 00 27 2A F1 C8 00 00 86 DD         ........'*......
+    60 01 9A 8D 00 30 11 01                                 `....0..
+UDP Header
+    FE 80 00 00 00 00 00 00                                 .€......
+Data Payload
+    00 00 00 00 00 00 00 00 00 FB 14 E9 14 E9 00 30         ...............0
+    FA 89 00 00 00 00 00 01 00 00 00 00 00 00 0B 5F         ..............._
+    67 6F 6F 67 6C 65 63 61 73 74 04 5F 74 63
