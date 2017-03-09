@@ -1,0 +1,3 @@
+[submodule "AdaptiveIntelligence/libraries/winpcap/wpcap/libpcap"]
+	path = AdaptiveIntelligence/libraries/winpcap/wpcap/libpcap
+	url = git://bpf.tcpdump.org/libpcap
