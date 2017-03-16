@@ -1,6 +1,6 @@
-bld = build
+OUT_DIR = build
 
-obj = $(bld)/Parser.o
+SNIF_OBJ = $(OUT_DIR)/Sniffer.o
 
 # INC_DIR = libraries/WpdPack/Include
 CFLAGS = -c -Wall
@@ -11,16 +11,17 @@ SRC_DIR = Source
 HDR_DIR = Headers
 
 # Parser file
-PARSER = $(SRC_DIR)/Parser/Parser.c
+SNIFFER = $(SRC_DIR)/Sniffer/Sniffer.c
 
 # Build EXE
-Parser: $(obj)
-	gcc -o Parser $(obj) -lpcap
+Sniffer: $(SNIF_OBJ)
+	gcc -o Parser $(SNIF_OBJ) -lpcap
 	@echo "make complete."
 
 # Build Parser object
-build/Parser.o:$(PARSER)
-	gcc $(CFLAGS) $(PARSER) -o $(obj) -lpcap
+$(OUT_DIR)/Sniffer.o:$(SNIFFER)
+	mkdir -p $(OUT_DIR)
+	gcc $(CFLAGS) $(SNIFFER) -o $(SNIF_OBJ) -lpcap
 
 clean:
-	rm $(bld)/*
+	rm -rf $(OUT_DIR)

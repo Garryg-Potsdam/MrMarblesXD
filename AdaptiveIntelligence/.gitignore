@@ -9,5 +9,10 @@
 # generated directories
 bin/
 obj/
+build/
+build/*
+
+# output files
+*.txt
 
 # End of https://www.gitignore.io/api/codeblocks
