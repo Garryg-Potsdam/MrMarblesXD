@@ -16,8 +16,7 @@ void storePackets() {
 
     //First get the list of available devices
     printf("Finding available devices ... ");
-    if( pcap_findalldevs( &alldevsp , errbuf) )
-    {
+    if (pcap_findalldevs(&alldevsp , errbuf)) {
         printf("Error finding devices : %s" , errbuf);
         exit(1);
     }
@@ -28,34 +27,28 @@ void storePackets() {
     for(device = alldevsp ; device != NULL ; device = device->next)
     {
         printf("%d. %s - %s\n" , count , device->name , device->description);
-        if(device->name != NULL)
-        {
+        if(device->name != NULL) {
             strcpy(devs[count] , device->name);
         }
         count++;
     }
 
     //Ask user which device to sniff
-    printf("Enter the number of the device you want to sniff : ");
-    scanf("%d" , &n);
-    devname = devs[n];
-
-    //Open the device for sniffing
-    printf("Opening device %s for sniffing ... " , devname);
+    printf("Sniffing on all devices...");
+    devname = "any";
     handle = pcap_open_live(devname , 65536 , 1 , 0 , errbuf);
 
-    if (handle == NULL)
-    {
+    if (handle == NULL) {
         fprintf(stderr, "Couldn't open device %s : %s\n" , devname , errbuf);
         exit(1);
     }
+    
     printf("Done\n");
 
     logfile=fopen("log.txt","w");
-    if(logfile==NULL)
-    {
+    
+    if(logfile == NULL)
         printf("Unable to create file.");
-    }
 
     //Put the device in sniff loop
     pcap_loop(handle , -1 , process_packet , NULL);
@@ -73,31 +66,31 @@ void process_packet(u_char *args, const struct pcap_pkthdr *header, const u_char
     struct iphdr *iph = (struct iphdr*)(buffer + sizeof(struct ethhdr));
 
     //++total;
-    //switch (iph->protocol) //Check the Protocol and do accordingly...
-    //{
-        //case 1:  //ICMP Protocol
-        //    ++icmp;
-        //    print_icmp_packet( buffer , size);
-        //    break;
+    switch (iph->protocol) //Check the Protocol and do accordingly...
+    {
+        case 1:  //ICMP Protocol
+            ++icmp;
+            print_icmp_packet( buffer , size);
+            break;
 
-        //case 2:  //IGMP Protocol
-        //    ++igmp;
-        //    break;
+        case 2:  //IGMP Protocol
+            ++igmp;
+            break;
+            
+        case 6:  //TCP Protocol
+            ++tcp;
+            print_tcp_packet(buffer , size);
+            break;
 
-        //case 6:  //TCP Protocol
-        //    ++tcp;
-        //    print_tcp_packet(buffer , size);
-        //    break;
+        case 17: //UDP Protocol
+            ++udp;
+            print_udp_packet(buffer , size);
+            break;
 
-        //case 17: //UDP Protocol
-        //    ++udp;
-        //    print_udp_packet(buffer , size);
-        //    break;
-
-        //default: //Some Other Protocol like ARP etc.
-        //    ++others;
-        //    break;
-    //}
+        default: //Some Other Protocol like ARP etc.
+            ++others;
+            break;
+    }
     //printf("TCP : %d   UDP : %d   ICMP : %d   IGMP : %d   Others : %d   Total : %d\r", tcp , udp , icmp , igmp , others , total);
 }
 
