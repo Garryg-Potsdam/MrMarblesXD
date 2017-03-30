@@ -7,12 +7,13 @@ FILE *logfile;
 struct sockaddr_in source,dest;
 int tcp=0,udp=0,icmp=0,others=0,igmp=0,total=0,i,j;
 
-void storePackets() {
+
+void storePackets(Queue* packets) {
     pcap_if_t *alldevsp , *device;
     pcap_t *handle; //Handle of the device that shall be sniffed
 
     char errbuf[100] , *devname , devs[100][100];
-    int count = 1 , n;
+    int count = 1;
 
     //First get the list of available devices
     printf("Finding available devices ... ");
@@ -51,9 +52,7 @@ void storePackets() {
         printf("Unable to create file.");
 
     //Put the device in sniff loop
-    pcap_loop(handle , -1 , process_packet , NULL);
-
-    return 0;
+    pcap_loop(handle , -1 , process_packet, packets);
 }
 
 // TODO: write all the variables and specifics for each type of packet to be formatted
@@ -61,9 +60,12 @@ void storePackets() {
 void process_packet(u_char *args, const struct pcap_pkthdr *header, const u_char *buffer)
 {
     int size = header->len;
-    PrintData(buffer, size);
-    //Get the IP Header part of this packet , excluding the ethernet header
-    struct iphdr *iph = (struct iphdr*)(buffer + sizeof(struct ethhdr));
+    
+    put(&args[0], buffer, size);
+
+    // PrintData(buffer, size);
+    /*/Get the IP Header part of this packet , excluding the ethernet header
+    //struct iphdr *iph = (struct iphdr*)(buffer + sizeof(struct ethhdr));
 
     //++total;
     switch (iph->protocol) //Check the Protocol and do accordingly...
@@ -90,8 +92,7 @@ void process_packet(u_char *args, const struct pcap_pkthdr *header, const u_char
         default: //Some Other Protocol like ARP etc.
             ++others;
             break;
-    }
-    //printf("TCP : %d   UDP : %d   ICMP : %d   IGMP : %d   Others : %d   Total : %d\r", tcp , udp , icmp , igmp , others , total);
+    }*/
 }
 
 void print_ethernet_header(const u_char *Buffer, int Size)
