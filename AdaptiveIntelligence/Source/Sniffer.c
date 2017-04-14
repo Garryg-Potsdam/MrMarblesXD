@@ -8,10 +8,10 @@ struct sockaddr_in source,dest;
 int tcp=0,udp=0,icmp=0,others=0,igmp=0,total=0,i,j;
 
 
-void storePackets(Queue* packets) {
+void storePackets(Queue* packets, int totalPacketsToGet) {
     pcap_if_t *alldevsp , *device;
     pcap_t *handle; //Handle of the device that shall be sniffed
-
+    
     char errbuf[100] , *devname , devs[100][100];
     int count = 1;
 
@@ -22,7 +22,6 @@ void storePackets(Queue* packets) {
         exit(1);
     }
     printf("Done");
-
     //Print the available devices
     printf("\nAvailable Devices are :\n");
     for(device = alldevsp ; device != NULL ; device = device->next)
@@ -50,9 +49,18 @@ void storePackets(Queue* packets) {
     
     if(logfile == NULL)
         printf("Unable to create file.");
-
     //Put the device in sniff loop
-    pcap_loop(handle , -1 , process_packet, packets);
+    pcap_loop(handle , totalPacketsToGet , process_packet, packets);
+}
+
+void sendPackets(Queue* packets) {
+    while (!empty(&packets)) {
+        Node* temp = get(&packets);
+        printf("Size: %d\n", temp->size);
+        if (temp->size == 0)
+            continue;
+        PrintsData(temp->buffer, temp->size);
+    }
 }
 
 // TODO: write all the variables and specifics for each type of packet to be formatted
@@ -61,6 +69,7 @@ void process_packet(u_char *args, const struct pcap_pkthdr *header, const u_char
 {
     int size = header->len;
     
+
     put(&args[0], buffer, size);
 
     // PrintData(buffer, size);

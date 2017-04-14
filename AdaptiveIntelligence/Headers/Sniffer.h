@@ -35,6 +35,7 @@ void print_udp_packet(const u_char * , int);
 void print_icmp_packet(const u_char * , int );
 void PrintData (const u_char * , int);
 
-void storePackets(Queue*);
+void storePackets(Queue*, int);
+void sendPackets(Queue*);
 
 
