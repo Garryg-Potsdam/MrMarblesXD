@@ -3,14 +3,13 @@
 unsigned char* getBuffer(Node*);
 
 void put(Queue* packets, const unsigned char* buffer, const int size) {
-    
+    printf("put Address: %x\n", (int)packets);
     packets->size++;
     Node* temp = (Node*)malloc(sizeof(Node));
     
     //PrintsData(buffer, size);
     //printf("Size: %d\n", packets->size);
     
-    temp->buffer = (unsigned char*)malloc(65536);
     temp->buffer = buffer;
     temp->size = size;
     

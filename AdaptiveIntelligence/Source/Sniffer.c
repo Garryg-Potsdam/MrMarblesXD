@@ -15,18 +15,20 @@ void storePackets(Queue* packets, int totalPacketsToGet) {
     char errbuf[100] , *devname , devs[100][100];
     int count = 1;
 
+    printf("storePackets Address: %x\n", (int)packets);
+
     //First get the list of available devices
-    printf("Finding available devices ... ");
+   // printf("Finding available devices ... ");
     if (pcap_findalldevs(&alldevsp , errbuf)) {
         printf("Error finding devices : %s" , errbuf);
         exit(1);
     }
-    printf("Done");
+   // printf("Done");
     //Print the available devices
-    printf("\nAvailable Devices are :\n");
+   // printf("\nAvailable Devices are :\n");
     for(device = alldevsp ; device != NULL ; device = device->next)
     {
-        printf("%d. %s - %s\n" , count , device->name , device->description);
+        //printf("%d. %s - %s\n" , count , device->name , device->description);
         if(device->name != NULL) {
             strcpy(devs[count] , device->name);
         }
@@ -34,7 +36,7 @@ void storePackets(Queue* packets, int totalPacketsToGet) {
     }
 
     //Ask user which device to sniff
-    printf("Sniffing on all devices...");
+    //printf("Sniffing on all devices...");
     devname = "any";
     handle = pcap_open_live(devname , 65536 , 1 , 0 , errbuf);
 
@@ -43,19 +45,20 @@ void storePackets(Queue* packets, int totalPacketsToGet) {
         exit(1);
     }
     
-    printf("Done\n");
+   // printf("Done\n");
 
-    logfile=fopen("log.txt","w");
+    //logfile=fopen("log.txt","w");
     
-    if(logfile == NULL)
-        printf("Unable to create file.");
+    //if(logfile == NULL)
+    //    printf("Unable to create file.");
     //Put the device in sniff loop
-    pcap_loop(handle , totalPacketsToGet , process_packet, packets);
+        
+    pcap_loop(handle, totalPacketsToGet , process_packet, packets);
 }
 
 void sendPackets(Queue* packets) {
-    while (!empty(&packets)) {
-        Node* temp = get(&packets);
+    while (!empty(packets)) {
+        Node* temp = get(packets);
         printf("Size: %d\n", temp->size);
         if (temp->size == 0)
             continue;
@@ -69,8 +72,13 @@ void process_packet(u_char *args, const struct pcap_pkthdr *header, const u_char
 {
     int size = header->len;
     
+    printf("process_packet Address: %x\n", (int)&args[0]);
 
-    put(&args[0], buffer, size);
+    Queue* temp = (Queue*)&args[0];
+
+    printf("Before: %s\n", temp->size);
+    put(temp, buffer, size);
+    printf("After: %s\n", temp->size);
 
     // PrintData(buffer, size);
     /*/Get the IP Header part of this packet , excluding the ethernet header

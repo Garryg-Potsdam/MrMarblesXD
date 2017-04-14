@@ -30,16 +30,16 @@ Parser: $(objs)
 
 # Build Queue object
 $(Q_OBJ):$(QUEUE) $(QUEUE_H)
-	mpicc $(CFLAGS) $(QUEUE) -o $(Q_OBJ) -lpcap
+	mpicc $(CFLAGS) $(QUEUE) -o $(Q_OBJ) -lpcap -w
 
 # Build Parser object
 $(SNIF_OBJ):$(SNIFFER) $(SNIFFER_H)
-	mpicc $(CFLAGS) $(SNIFFER) -o $(SNIF_OBJ) -lpcap
+	mpicc $(CFLAGS) $(SNIFFER) -o $(SNIF_OBJ) -lpcap -w
 
 # Build Main object
 $(MAIN_OBJ):$(MAIN)
 	mkdir -p $(OUT_DIR)
-	mpicc -c Source/Main.c -o $(MAIN_OBJ) -lpcap
+	mpicc -c Source/Main.c -o $(MAIN_OBJ) -lpcap -w
 
 clean:
 	rm -rf $(OUT_DIR)
