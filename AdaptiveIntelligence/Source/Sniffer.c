@@ -3,84 +3,79 @@
 */
 #include "../Headers/Sniffer.h"
 
-FILE *logfile;
-struct sockaddr_in source,dest;
-int tcp=0,udp=0,icmp=0,others=0,igmp=0,total=0,i,j;
-
-
+// Parameters:           packets - a queue of packets
+//             totalPacketsToGet - the amount of packets to stuff into queue
+// Post-Condition: establishes connections to network ports and then adds
+//                 adds packet traffic to the queue
 void storePackets(Queue* packets, int totalPacketsToGet) {
+    // Structs for making network connections
     pcap_if_t *alldevsp , *device;
     pcap_t *handle; //Handle of the device that shall be sniffed
     
+    /// Error reporting data
     char errbuf[100] , *devname , devs[100][100];
     int count = 1;
-
-    printf("storePackets Address: %x\n", (int)packets);
+    devname = "any";
 
     //First get the list of available devices
-   // printf("Finding available devices ... ");
     if (pcap_findalldevs(&alldevsp , errbuf)) {
         printf("Error finding devices : %s" , errbuf);
         exit(1);
     }
-   // printf("Done");
-    //Print the available devices
-   // printf("\nAvailable Devices are :\n");
-    for(device = alldevsp ; device != NULL ; device = device->next)
-    {
-        //printf("%d. %s - %s\n" , count , device->name , device->description);
-        if(device->name != NULL) {
-            strcpy(devs[count] , device->name);
-        }
-        count++;
-    }
-
-    //Ask user which device to sniff
-    //printf("Sniffing on all devices...");
-    devname = "any";
+   
+    // open connection to all ports
     handle = pcap_open_live(devname , 65536 , 1 , 0 , errbuf);
 
+    // if errer end
     if (handle == NULL) {
-        fprintf(stderr, "Couldn't open device %s : %s\n" , devname , errbuf);
+        printf(stderr, "Couldn't open device %s : %s\n" , devname , errbuf);
         exit(1);
     }
     
-   // printf("Done\n");
-
-    //logfile=fopen("log.txt","w");
-    
-    //if(logfile == NULL)
-    //    printf("Unable to create file.");
-    //Put the device in sniff loop
-        
+    // process totalPacketsToGet amount of packets
     pcap_loop(handle, totalPacketsToGet , process_packet, packets);
 }
 
+// Parameters: packets - queue of packets
+// Post-Condition: delivers packets to other ranks
 void sendPackets(Queue* packets) {
+    // if not empty send packets to other ranks
     while (!empty(packets)) {
+        // get the front node in queue
         Node* temp = get(packets);
-        printf("Size: %d\n", temp->size);
+
         if (temp->size == 0)
             continue;
+
+        // TODO: send packet data to other ranks with MPI
         PrintsData(temp->buffer, temp->size);
+
+        // free the used packet memory
+        free(temp);
     }
 }
 
-// TODO: write all the variables and specifics for each type of packet to be formatted
-//       how I need them
-void process_packet(u_char *args, const struct pcap_pkthdr *header, const u_char *buffer)
-{
+// Parameters:   args - the parameters passed from pcap_loop call
+//             header - a struct with packet header data
+//             buffer - the buffer of the body of the packet data
+void process_packet(u_char* args, const struct pcap_pkthdr* header, const u_char* buffer) {
+
+    // TODO: write all the variables and specifics for each type of packet to be formatted
+    // how I need them
+
+    // size of packet buffer
     int size = header->len;
     
-    printf("process_packet Address: %x\n", (int)&args[0]);
-
+    // convert the queue argument to a usable variable
     Queue* temp = (Queue*)&args[0];
 
-    printf("Before: %s\n", temp->size);
+    // put the current packet into the queue
     put(temp, buffer, size);
-    printf("After: %s\n", temp->size);
+}
 
-    // PrintData(buffer, size);
+// TODO: comb through this stuff and see what is useful
+
+
     /*/Get the IP Header part of this packet , excluding the ethernet header
     //struct iphdr *iph = (struct iphdr*)(buffer + sizeof(struct ethhdr));
 
@@ -109,7 +104,7 @@ void process_packet(u_char *args, const struct pcap_pkthdr *header, const u_char
         default: //Some Other Protocol like ARP etc.
             ++others;
             break;
-    }*/
+    }
 }
 
 void print_ethernet_header(const u_char *Buffer, int Size)
@@ -289,17 +284,5 @@ void print_icmp_packet(const u_char * Buffer , int Size)
 
     fprintf(logfile , "\n###########################################################");
 }
+*/
 
-// Parameters: data - the packet data
-// 	       Size - the size of the buffer
-void PrintData (const u_char * data , int Size) {
-    int i; // , j;
-    fprintf(logfile, "PACKET:\n        ");
-    for(i=0 ; i < Size ; i++) {
-	if (i % 60 == 0 && i > 0) fprintf(logfile ,  "\n        " );
-        if(data[i] > 32 && data[i] < 127)	    
-            fprintf(logfile , "%c",(unsigned char)data[i]); //if its a number or alphabet
-        else fprintf(logfile , "."); //otherwise print a dot
-    }
-    fprintf(logfile ,  "\n\n" );
-}

@@ -27,15 +27,27 @@
 
 #include "../Headers/PacketQueue.h"
 
-void process_packet(u_char *, const struct pcap_pkthdr *, const u_char *);
+// Parameters:  Queue* - a queue of packets
+//                 int - the amount of packets to stuff into queue
+// Post-Condition: establishes connections to network ports and then adds
+//                 adds packet traffic to the queue
+void storePackets(Queue*, int);
+
+// Parameters: Queue* - queue of packets
+// Post-Condition: delivers packets to other rank
+void sendPackets(Queue*);
+
+// Parameters:      u_char* - the parameters passed from pcap_loop call
+//             pcap_pkthdr* - a struct with packet header data
+//                  u_char* - the buffer of the body of the packet data
+void process_packet(u_char*, const struct pcap_pkthdr*, const u_char*);
+
+/*
 void process_ip_packet(const u_char * , int);
 void print_ip_packet(const u_char * , int);
 void print_tcp_packet(const u_char *  , int );
 void print_udp_packet(const u_char * , int);
 void print_icmp_packet(const u_char * , int );
-void PrintData (const u_char * , int);
-
-void storePackets(Queue*, int);
-void sendPackets(Queue*);
+*/
 
 

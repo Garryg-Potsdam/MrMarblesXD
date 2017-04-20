@@ -3,35 +3,34 @@
 #include "../Headers/Sniffer.h"
 #include <pthread.h>
 
+// This is a program that search packets data
+// for malicious intent or unsecure data
 int main(int argc, char** argv) {
-    // Initialize the MPI environment
 
+    // initialize the MPI environment
     MPI_Init(NULL, NULL);
-    
-    Queue packets;
-    printf("Main Address: %x\n", (int)&packets);
-    packets.size = malloc(sizeof(int));
-    packets.size = 0;
+
+    // get the rank of current node    
     int rank;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-    if (rank == 0) {
+
+    // rank 0 will be leading rank.
+    // it dumps packets into a queue
+    // and delivers them to other ranks
+    if (rank == 0) { 
+        // dump packets into queue
+        // send packets
+        // repeat                       
         while (1) {
+            Queue packets = (Queue){(int)0, NULL, NULL};
             storePackets(&packets, 10);
-            printf("Queue Size: %d\n", packets.size);
             sendPackets(&packets);
-        }
-        
-    } else {
+        }        
+    } else { // TODO: get packet data from 
 	    printf("My Rank: %d\n", rank);
-	    while (true) {
-	        if (!empty(&packets)) {
-    		    printf("HELLO");
-                Node* temp = get(&packets);
-	            //PrintsData(temp->buffer, temp->size);
-	        }
-	    }
     }
     
+    // wrap up and end the program
     MPI_Finalize();
     return 0;
 }
