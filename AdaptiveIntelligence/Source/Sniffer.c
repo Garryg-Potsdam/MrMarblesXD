@@ -3,6 +3,7 @@
 */
 #include "../Headers/Sniffer.h"
 
+
 // Parameters:           packets - a queue of packets
 // Post-Condition: establishes connections to network ports and then adds
 //                 adds packet traffic to the queue
@@ -38,17 +39,28 @@ void storePackets(Queue* packets) {
 // Parameters: packets - queue of packets
 // Post-Condition: delivers packets to other ranks
 void sendPackets(Queue* packets) {
+
+    const int nitems = 2;
+    int blocklengths[] = {1, 1};
+    MPI_Datatype types[] = {MPI_UNSIGNED_CHAR, MPI_INT};
+    MPI_Datatype MPI_NODE;
+    MPI_Aint offsets[] = {offsetof(Node, buffer), offsetof(Node, size)};
+
+    MPI_Type_create_struct(nitems, blocklengths, offsets, types, &MPI_NODE);
+    MPI_Type_commit(&MPI_NODE);
+
     // if not empty send packets to other ranks
     while (1) {
         if (!empty(packets)) {
-            // get the front node in queue
-            Node* temp = get(packets);
 
-            if (temp->size == 0)
-                continue;
+            // get the front node in queue
+            Node* temp = get(packets);            
+            
+            
 
             // TODO send packet data to multiple ranks with MPI 
-            MPI_Send(temp, 1, MPI_INT, 1, 12, MPI_COMM_WORLD);  
+            MPI_Send(temp, 1, MPI_NODE, 1, 0, MPI_COMM_WORLD);
+            //PrintsData(temp->buffer, temp->size, "rank0");
             // free the used packet memory
             free(temp);
         }

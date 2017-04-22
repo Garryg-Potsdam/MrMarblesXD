@@ -11,10 +11,8 @@
  * Created on March 19, 2017, 10:57 AM
  */
 
-
+#include <stddef.h>
 #include <pcap.h>
-#include <stdio.h>
-#include <stdlib.h> // for exit()
 #include <string.h> //for memset
 
 #include <sys/socket.h>
@@ -24,8 +22,11 @@
 #include <netinet/udp.h>   //Provides declarations for udp header
 #include <netinet/tcp.h>   //Provides declarations for tcp header
 #include <netinet/ip.h>    //Provides declarations for ip header
+#include <mpi.h>
+#include <pthread.h>
 
 #include "../Headers/PacketQueue.h"
+
 
 // Parameters:  Queue* - a queue of packets
 // Post-Condition: establishes connections to network ports and then

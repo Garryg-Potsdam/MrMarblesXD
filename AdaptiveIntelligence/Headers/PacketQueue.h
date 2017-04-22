@@ -1,8 +1,6 @@
-#include <mpi.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include <pthread.h>
 
 // Node for queue linked list
 // stores packet data
@@ -27,7 +25,7 @@ typedef struct Queue {
 extern void put(Queue*, const unsigned char*, const int);
 
 // Parameters: Queue* - the queue of packets to get item from
-// Returns: the front packet of a qu
+// Returns: the front packet of a queue
 extern Node* get(Queue*);
 
 // Parameters: Queue* - a queue of packets
@@ -37,4 +35,4 @@ extern bool empty(Queue*);
 // Parameters: u_char* - the packet data
 // 	           int - the size of the buffer
 // Post-Condition: prints packet data to the terminal
-void PrintsData (const u_char*, int);
+void PrintsData (const u_char*, int, char*);

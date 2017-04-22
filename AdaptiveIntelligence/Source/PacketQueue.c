@@ -14,7 +14,7 @@ void put(Queue* packets, const unsigned char* buffer, const int size) {
     // store the packet data and size in the temp node
     temp->buffer = buffer;
     temp->size = size;
-
+    
     // if the queue is not started yet, add first packets
     if (packets->front == NULL && packets->rear == NULL) {
 	    packets->front = temp;
@@ -29,21 +29,32 @@ void put(Queue* packets, const unsigned char* buffer, const int size) {
 // Parameters: packets - the queue of packets to get item from
 // Returns: the front packet of a queue
 Node* get(Queue* packets) {
+
+    Node* temp = malloc(sizeof(Node*));
+    temp->buffer = "FAKE";
+    temp->size = 4;
+
     // check if queue is empty
-    if (packets->size == 0) {
-        printf("Empty Queue Error.\n");
-        return NULL;
-    }
+    //if (packets->front == NULL) {
+        return temp;
+    //}
+
 
     // decrement size of queue
     packets->size--;
-
+    
+    free(temp);
+    
     // grab the front packet
-    Node* temp = packets->front;
+    temp = packets->front;
 
     // move front pointer to next node
     packets->front = packets->front->next;
-    
+    if (packets->size == 0) {
+        packets->front = NULL;
+        packets->rear = NULL;
+    }        
+
     // return front packet
     return temp;
 }
@@ -58,9 +69,9 @@ bool empty(Queue* packets) {
 // Parameters: data - the packet data
 // 	           size - the size of the buffer
 // Post-Condition: prints packet data to the terminal
-void PrintsData (const u_char * data , int size) {    
+void PrintsData (const u_char * data , int size, char* s) {    
     int i;
-    printf("PACKET:\n        ");
+    printf("%sPACKET:\n        ", s);
     for(i=0 ; i < size ; i++) {
 	if (i % 60 == 0 && i > 0) printf("\n        " );
         if(data[i] > 32 && data[i] < 127)	    

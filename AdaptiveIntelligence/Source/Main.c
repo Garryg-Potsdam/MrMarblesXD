@@ -12,10 +12,21 @@ int main(int argc, char** argv) {
     int rank;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
+    const int nitems = 2;
+    int blocklengths[] = {1, 1};
+    MPI_Datatype types[] = {MPI_UNSIGNED_CHAR, MPI_INT};
+    MPI_Datatype MPI_NODE;
+    MPI_Aint offsets[] = {offsetof(Node, buffer), offsetof(Node, size)};
+
+    MPI_Type_create_struct(nitems, blocklengths, offsets, types, &MPI_NODE);
+    MPI_Type_commit(&MPI_NODE);
+
+        
+
     // total amount of packets to get in each cycle
     // before sending packets to other ranks
     const int totalPacketsToGet = 1000;    
-    const int NUM_THREADS = 4;
+    const int NUM_THREADS = 1;
     // rank 0 will be leading rank.
     // it dumps packets into a queue
     // and delivers them to other ranks
@@ -37,15 +48,14 @@ int main(int argc, char** argv) {
         // send packets
         // repeat                       
         while (1) {
-                        storePackets(&packets);
-            //sendPackets(&packets);        
+            storePackets(&packets);
         }
     } else { // TODO: get packet data from 
+        printf("My Rank: %d\n", rank);
 	    while(1){
-            printf("My Rank: %d\n", rank);
-            Node* temp;
-            MPI_Recv(temp, 1, MPI_INT, 0, 12, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-            PrintsData(temp->buffer, temp->size);
+            Node* temp = malloc(sizeof(Node*));
+            MPI_Recv(temp, 1, MPI_NODE, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+            PrintsData(temp->buffer, temp->size, "RANK1");
             free(temp);
         }
     }
