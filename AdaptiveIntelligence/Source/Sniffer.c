@@ -4,10 +4,9 @@
 #include "../Headers/Sniffer.h"
 
 // Parameters:           packets - a queue of packets
-//             totalPacketsToGet - the amount of packets to stuff into queue
 // Post-Condition: establishes connections to network ports and then adds
 //                 adds packet traffic to the queue
-void storePackets(Queue* packets, int totalPacketsToGet) {
+void storePackets(Queue* packets) {
     // Structs for making network connections
     pcap_if_t *alldevsp , *device;
     pcap_t *handle; //Handle of the device that shall be sniffed
@@ -33,25 +32,26 @@ void storePackets(Queue* packets, int totalPacketsToGet) {
     }
     
     // process totalPacketsToGet amount of packets
-    pcap_loop(handle, totalPacketsToGet , process_packet, packets);
+    pcap_loop(handle, -1, process_packet, packets);
 }
 
 // Parameters: packets - queue of packets
 // Post-Condition: delivers packets to other ranks
 void sendPackets(Queue* packets) {
     // if not empty send packets to other ranks
-    while (!empty(packets)) {
-        // get the front node in queue
-        Node* temp = get(packets);
+    while (1) {
+        if (!empty(packets)) {
+            // get the front node in queue
+            Node* temp = get(packets);
 
-        if (temp->size == 0)
-            continue;
+            if (temp->size == 0)
+                continue;
 
-        // TODO: send packet data to other ranks with MPI
-        PrintsData(temp->buffer, temp->size);
-
-        // free the used packet memory
-        free(temp);
+            // TODO send packet data to multiple ranks with MPI 
+            MPI_Send(temp, 1, MPI_INT, 1, 12, MPI_COMM_WORLD);  
+            // free the used packet memory
+            free(temp);
+        }
     }
 }
 
@@ -59,9 +59,8 @@ void sendPackets(Queue* packets) {
 //             header - a struct with packet header data
 //             buffer - the buffer of the body of the packet data
 void process_packet(u_char* args, const struct pcap_pkthdr* header, const u_char* buffer) {
-
-    // TODO: write all the variables and specifics for each type of packet to be formatted
-    // how I need them
+    // TODO: write all the variables and specifics for each 
+    // type of packet to be formatted how I need them
 
     // size of packet buffer
     int size = header->len;

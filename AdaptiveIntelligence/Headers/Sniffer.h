@@ -28,10 +28,9 @@
 #include "../Headers/PacketQueue.h"
 
 // Parameters:  Queue* - a queue of packets
-//                 int - the amount of packets to stuff into queue
-// Post-Condition: establishes connections to network ports and then adds
+// Post-Condition: establishes connections to network ports and then
 //                 adds packet traffic to the queue
-void storePackets(Queue*, int);
+void storePackets(Queue*);
 
 // Parameters: Queue* - queue of packets
 // Post-Condition: delivers packets to other rank
