@@ -39,33 +39,37 @@ void storePackets(Queue* packets) {
 // Parameters: packets - queue of packets
 // Post-Condition: delivers packets to other ranks
 void sendPackets(Queue* packets) {
+    int world_size;
 
-    const int nitems = 2;
-    int blocklengths[] = {1, 1};
-    MPI_Datatype types[] = {MPI_UNSIGNED_CHAR, MPI_INT};
-    MPI_Datatype MPI_NODE;
-    MPI_Aint offsets[] = {offsetof(Node, buffer), offsetof(Node, size)};
-
-    MPI_Type_create_struct(nitems, blocklengths, offsets, types, &MPI_NODE);
-    MPI_Type_commit(&MPI_NODE);
-
+    MPI_Comm_size(MPI_COMM_WORLD, &world_size);
+    
+    int my_rank = 0;
+    int rank_to_send = 0;
     // if not empty send packets to other ranks
     while (1) {
         if (!empty(packets)) {
+            rank_to_send = (rank_to_send + 1) % world_size;
+
+            if (rank_to_send == my_rank)
+                rank_to_send++;
 
             // get the front node in queue
-            Node* temp = get(packets);            
-            
-            
+            Node* temp = get(packets);
 
-            // TODO send packet data to multiple ranks with MPI 
-            MPI_Send(temp, 1, MPI_NODE, 1, 0, MPI_COMM_WORLD);
-            //PrintsData(temp->buffer, temp->size, "rank0");
+            while (temp == NULL)
+                temp = get(packets);
+
+            if (temp->size > 0) {
+                MPI_Send(&temp->size, 1, MPI_INTEGER, rank_to_send, 0, MPI_COMM_WORLD);
+                MPI_Send(temp->buffer, temp->size, MPI_UNSIGNED_CHAR, rank_to_send, 1, MPI_COMM_WORLD);
+                free(temp);
+            }
+            
             // free the used packet memory
-            free(temp);
         }
     }
 }
+
 
 // Parameters:   args - the parameters passed from pcap_loop call
 //             header - a struct with packet header data
@@ -76,7 +80,7 @@ void process_packet(u_char* args, const struct pcap_pkthdr* header, const u_char
 
     // size of packet buffer
     int size = header->len;
-    
+
     // convert the queue argument to a usable variable
     Queue* temp = (Queue*)&args[0];
 

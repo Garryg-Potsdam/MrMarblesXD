@@ -35,4 +35,4 @@ extern bool empty(Queue*);
 // Parameters: u_char* - the packet data
 // 	           int - the size of the buffer
 // Post-Condition: prints packet data to the terminal
-void PrintsData (const u_char*, int, char*);
+void PrintsData (const u_char*, int);
