@@ -12,9 +12,22 @@ void put(Queue* packets, const unsigned char* buffer, const int size) {
     Node* temp = (Node*)malloc(sizeof(Node));
     
     // store the packet data and size in the temp node
-    temp->buffer = buffer;
+    temp->buffer = malloc((size + 1) * sizeof(int));
+    temp->buffer[0] = size;
     temp->size = size;
-    
+
+    // TODO: change this to make a new array and append the size on the front if it
+    int i = 1;
+    //printf("Packet Added\n");
+    //printf("Passed Size: %d\n", size);
+    for (; i <= size; i++) {
+        temp->buffer[i] = buffer[i - 1];
+    }
+
+    //if (temp->buffer[0] > 0) {
+    //    PrintsData(temp->buffer, temp->buffer[0]);
+    //}
+        
     // if the queue is not started yet, add first packets
     if (packets->front == NULL && packets->rear == NULL) {
 	    packets->front = temp;
@@ -64,13 +77,14 @@ bool empty(Queue* packets) {
 // Parameters: data - the packet data
 // 	           size - the size of the buffer
 // Post-Condition: prints packet data to the terminal
-void PrintsData (const u_char * data , int size) {    
+void PrintsData (int * data , int size) {    
     int i;
     printf("PACKET:\n        ");
-    for(i=0 ; i < size ; i++) {
-	if (i % 60 == 0 && i > 0) printf("\n        " );
-        if(data[i] > 32 && data[i] < 127)	    
-            printf("%c",(unsigned char)data[i]); //if its a number or alphabet
+    for(i = 1 ; i < size ; i++) {
+	    if (i % 60 == 0 && i > 0) printf("\n        " );
+            if(data[i] > 32 && data[i] < 127)
+                //if its a number or alphabet	    
+                printf("%c", data[i]);
         else printf("."); //otherwise print a dot
     }
     printf("\n\n");

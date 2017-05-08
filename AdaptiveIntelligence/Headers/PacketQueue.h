@@ -5,7 +5,7 @@
 // Node for queue linked list
 // stores packet data
 typedef struct Node_t {
-    unsigned char* buffer;
+    int* buffer;
     int size;
     struct Node* next;
 } Node;
@@ -35,4 +35,4 @@ extern bool empty(Queue*);
 // Parameters: u_char* - the packet data
 // 	           int - the size of the buffer
 // Post-Condition: prints packet data to the terminal
-void PrintsData (const u_char*, int);
+void PrintsData (int *, int);

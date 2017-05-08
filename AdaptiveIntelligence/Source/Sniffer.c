@@ -40,33 +40,44 @@ void storePackets(Queue* packets) {
 // Post-Condition: delivers packets to other ranks
 void sendPackets(Queue* packets) {
     int world_size;
-
+    int count = 0;
     MPI_Comm_size(MPI_COMM_WORLD, &world_size);
     
     int my_rank = 0;
     int rank_to_send = 0;
     // if not empty send packets to other ranks
-    while (1) {
-        if (!empty(packets)) {
-            rank_to_send = (rank_to_send + 1) % world_size;
+    while (1) {        
+        rank_to_send = (rank_to_send + 1) % world_size;
 
-            if (rank_to_send == my_rank)
-                rank_to_send++;
+        if (rank_to_send == my_rank)
+            rank_to_send++;
 
-            // get the front node in queue
-            Node* temp = get(packets);
+        // get the front node in queue
+        Node* temp = get(packets);
 
-            while (temp == NULL)
-                temp = get(packets);
+        if (temp == NULL)
+            continue;
 
-            if (temp->size > 0) {
-                MPI_Send(&temp->size, 1, MPI_INTEGER, rank_to_send, 0, MPI_COMM_WORLD);
-                MPI_Send(temp->buffer, temp->size, MPI_UNSIGNED_CHAR, rank_to_send, 1, MPI_COMM_WORLD);
-                free(temp);
-            }
-            
-            // free the used packet memory
+        if (temp->size == NULL || temp->buffer == NULL)
+            continue;
+
+        if (temp->size > 500) {
+            free(temp);
+            continue;
         }
+
+        printf("TOP\n");        
+        printf("%d Before Sent Data\n", count);
+        count++;
+        MPI_Send(&temp->size, 1, MPI_INTEGER, rank_to_send, 0, MPI_COMM_WORLD);
+        printf("%d Middle Sent Data\n", count);
+        count++;
+        MPI_Send(temp->buffer, temp->size, MPI_INTEGER, rank_to_send, 1, MPI_COMM_WORLD);
+        free(temp);
+        printf("%d End Sent Data\n", count);
+        count++;
+                   
+
     }
 }
 

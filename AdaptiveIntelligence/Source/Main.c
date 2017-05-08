@@ -24,7 +24,7 @@ int main(int argc, char** argv) {
         int rc;
         long t;
         Queue packets = (Queue){(int)0, NULL, NULL};
-        for(t = 0; t < NUM_THREADS; t++){
+        for(t = 0; t < NUM_THREADS; t++) {
             printf("In main: creating thread %ld\n", t);
             rc = pthread_create(&sendThreads[t], NULL, sendPackets, &packets);
             if (rc){
@@ -41,13 +41,17 @@ int main(int argc, char** argv) {
         }
     } else {
 	    while(1){
-            int size;
-            MPI_Recv(&size, 1, MPI_INTEGER, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-           
-            u_char* buffer = malloc(sizeof(u_char) * size);
-            MPI_Recv(buffer, size, MPI_UNSIGNED_CHAR, 0, 1, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-            printf("Rank %d ", rank);
-            PrintsData(buffer, size);
+            int size;            
+            MPI_Recv(&size, 1, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+            
+            int * buffer = malloc((size + 1) * sizeof(int));
+            MPI_Recv(buffer, size, MPI_INT, 0, 1, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+            
+            //if (size == (int)buffer[0]) {
+              //  printf("Rank %d\n", rank);
+               // PrintsData(buffer, size);
+            //}
+
             free(buffer);
         }
     }
