@@ -18,16 +18,10 @@ void put(Queue* packets, const unsigned char* buffer, const int size) {
 
     // TODO: change this to make a new array and append the size on the front if it
     int i = 1;
-    //printf("Packet Added\n");
-    //printf("Passed Size: %d\n", size);
     for (; i <= size; i++) {
         temp->buffer[i] = buffer[i - 1];
     }
-
-    //if (temp->buffer[0] > 0) {
-    //    PrintsData(temp->buffer, temp->buffer[0]);
-    //}
-        
+       
     // if the queue is not started yet, add first packets
     if (packets->front == NULL && packets->rear == NULL) {
 	    packets->front = temp;

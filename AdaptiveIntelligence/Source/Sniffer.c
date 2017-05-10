@@ -7,7 +7,7 @@
 // Parameters:           packets - a queue of packets
 // Post-Condition: establishes connections to network ports and then adds
 //                 adds packet traffic to the queue
-void storePackets(Queue* packets) {
+void storePackets(Queue* packets, Params* args) {
     // Structs for making network connections
     pcap_if_t *alldevsp , *device;
     pcap_t *handle; //Handle of the device that shall be sniffed
@@ -33,54 +33,8 @@ void storePackets(Queue* packets) {
     }
     
     // process totalPacketsToGet amount of packets
-    pcap_loop(handle, -1, process_packet, packets);
+    pcap_loop(handle, -1, process_packet, args);
 }
-
-// Parameters: packets - queue of packets
-// Post-Condition: delivers packets to other ranks
-void sendPackets(Queue* packets) {
-    int world_size;
-    int count = 0;
-    MPI_Comm_size(MPI_COMM_WORLD, &world_size);
-    
-    int my_rank = 0;
-    int rank_to_send = 0;
-    // if not empty send packets to other ranks
-    while (1) {        
-        rank_to_send = (rank_to_send + 1) % world_size;
-
-        if (rank_to_send == my_rank)
-            rank_to_send++;
-
-        // get the front node in queue
-        Node* temp = get(packets);
-
-        if (temp == NULL)
-            continue;
-
-        if (temp->size == NULL || temp->buffer == NULL)
-            continue;
-
-        if (temp->size > 500) {
-            free(temp);
-            continue;
-        }
-
-        printf("TOP\n");        
-        printf("%d Before Sent Data\n", count);
-        count++;
-        MPI_Send(&temp->size, 1, MPI_INTEGER, rank_to_send, 0, MPI_COMM_WORLD);
-        printf("%d Middle Sent Data\n", count);
-        count++;
-        MPI_Send(temp->buffer, temp->size, MPI_INTEGER, rank_to_send, 1, MPI_COMM_WORLD);
-        free(temp);
-        printf("%d End Sent Data\n", count);
-        count++;
-                   
-
-    }
-}
-
 
 // Parameters:   args - the parameters passed from pcap_loop call
 //             header - a struct with packet header data
@@ -91,12 +45,51 @@ void process_packet(u_char* args, const struct pcap_pkthdr* header, const u_char
 
     // size of packet buffer
     int size = header->len;
+    
+    Params* p = (Params*)&args[0];
 
     // convert the queue argument to a usable variable
-    Queue* temp = (Queue*)&args[0];
+    Queue* temp = (Queue*)p->packets;
 
+    pthread_mutex_lock(p->mutex);
     // put the current packet into the queue
     put(temp, buffer, size);
+    pthread_mutex_unlock(p->mutex);
+}
+
+// Parameters: packets - queue of packets
+// Post-Condition: delivers packets to other ranks
+void sendPackets(Params* args) {
+    
+    int rank_to_send = args->rank;
+    printf("rank_to_send: %d\n", rank_to_send);
+    Queue* packets = args->packets;
+
+    int count = 0;
+    // if not empty send packets to other ranks
+    while (1) {
+        pthread_mutex_lock(args->mutex);
+        // get the front node in queue
+        Node* temp = get(packets);
+        pthread_mutex_unlock(args->mutex);
+
+        if (temp == NULL)
+            continue;
+
+        if (temp->size == NULL || temp->buffer == NULL)
+            continue;
+
+        if (temp->size > 1000) {
+            free(temp);
+            continue;
+        }
+
+        printf("%d Total Sent: \n", count);
+        count++;
+        MPI_Send(&temp->size, 1, MPI_INTEGER, rank_to_send, 0, MPI_COMM_WORLD);
+        MPI_Send(temp->buffer, temp->size, MPI_INTEGER, rank_to_send, 1, MPI_COMM_WORLD);
+        free(temp);
+    }
 }
 
 // TODO: comb through this stuff and see what is useful

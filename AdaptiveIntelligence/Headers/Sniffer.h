@@ -23,7 +23,6 @@
 #include <netinet/tcp.h>   //Provides declarations for tcp header
 #include <netinet/ip.h>    //Provides declarations for ip header
 #include <mpi.h>
-#include <pthread.h>
 
 #include "../Headers/PacketQueue.h"
 
@@ -31,11 +30,12 @@
 // Parameters:  Queue* - a queue of packets
 // Post-Condition: establishes connections to network ports and then
 //                 adds packet traffic to the queue
-void storePackets(Queue*);
+void storePackets(Queue*, Params*);
 
-// Parameters: Queue* - queue of packets
+// Parameters: Params* - struct of args for sending
+//                int - which rank to send to
 // Post-Condition: delivers packets to other rank
-void sendPackets(Queue*);
+void sendPackets(Params*);
 
 // Parameters:      u_char* - the parameters passed from pcap_loop call
 //             pcap_pkthdr* - a struct with packet header data

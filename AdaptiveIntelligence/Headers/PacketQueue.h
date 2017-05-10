@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <pthread.h>
 
 // Node for queue linked list
 // stores packet data
@@ -17,6 +18,13 @@ typedef struct Queue {
     Node* front;
     Node* rear;
 } Queue;
+
+typedef struct Params {
+    pthread_mutex_t* mutex;
+    int rank;
+    Queue* packets;
+} Params;
+
 
 // Parameters: Queue* - a Queue of network packets
 //              char* - a buffer of packet data
